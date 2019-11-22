@@ -57,6 +57,7 @@ if __name__ == "__main__":
 
         try:
             mock_data = make_mock_data(mock_macs)
+            print(mock_data)
             r = requests.post(f"http://{server_ip}/collect", json=json.dumps(mock_data))
             print(f"response code: {r.status_code}")
             print(f"response: {r.text}")
