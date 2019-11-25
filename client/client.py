@@ -1,3 +1,4 @@
+import datetime
 import subprocess
 import re
 import uuid
@@ -15,6 +16,9 @@ def get_ble_mac():
     mac = mac_regex.search(out.decode("utf-8")).group()
     return mac.lower()
 
+def get_time():
+    return str(datetime.datetime.utcnow())
+
 scanner = Scanner()
  
 print(get_mac())
@@ -25,5 +29,6 @@ scanner = Scanner()
 while True:
     devices = scanner.scan(1)
     for device in devices:
+        print(get_time())
         print("DEV = {} RSSI = {}".format(device.addr, device.rssi))
 
