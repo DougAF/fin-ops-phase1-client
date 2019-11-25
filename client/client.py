@@ -13,7 +13,7 @@ def get_ble_mac():
     out = result.stdout
     mac_regex = re.compile(r"[0-9a-f]{2}(:[0-9a-f]{2}){5}", re.IGNORECASE)
     mac = mac_regex.search(out.decode("utf-8")).group()
-    return mac
+    return mac.lower()
 
 scanner = Scanner()
  
