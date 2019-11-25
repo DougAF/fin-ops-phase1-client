@@ -110,3 +110,6 @@ venv.bak/
 
 # database
 database.json
+
+# ignore nohup
+nohup.out
