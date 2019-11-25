@@ -33,7 +33,8 @@ def make_mock_data(mock_macs):
     return {
         "recorder_time": get_time(),
         "recorder_mac": get_mac(),
-        "transmitter_mac": mock_macs[random.randint(0, len(mock_macs) - 1)],
+        "recorder_ble_mac": make_mock_mac(),
+        "transmitter_ble_mac": mock_macs[random.randint(0, len(mock_macs) - 1)],
         "rssi": random.randint(0, 10),
     }
 
