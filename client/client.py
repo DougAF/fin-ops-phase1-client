@@ -1,8 +1,13 @@
+import requests
+import json
 import datetime
 import subprocess
 import re
 import uuid
 from bluepy.btle import Scanner
+
+
+HEADERS = {"Content-Type": "application/json"}
 
 def get_mac():
     mac = hex(uuid.getnode())
@@ -19,16 +24,34 @@ def get_ble_mac():
 def get_time():
     return str(datetime.datetime.utcnow())
 
-scanner = Scanner()
- 
-print(get_mac())
-print(get_ble_mac())
+if __name__ == "__main__":
+    import sys
 
-scanner = Scanner()
+    try:
+        server_ip = sys.argv[1].strip()
+    except:
+        raise Exception(
+            "Must include the server's ip. Example: python mock_post.py 127.0.0.1 \n"
+            "If the port running the app is not the default (80), must include the port. \n"
+            "Example: python mock_post.py 127.0.0.1:5000 "
+        )
 
-while True:
-    devices = scanner.scan(1)
-    for device in devices:
-        print(get_time())
-        print("DEV = {} RSSI = {}".format(device.addr, device.rssi))
+    scanner = Scanner()
 
+    while True:
+        devices = scanner.scan(1)
+        for device in devices:
+            data = {
+                "recorder_time": get_time(),
+                "recorder_mac": get_mac(),
+                "recorder_ble_mac": get_ble_mac(),
+                "transmitter_ble_mac": device.addr,
+                "rssi": device.rssi,
+            }
+        
+        try:
+            r = requests.post(f"http://{server_ip}/collect", json=json.dumps(data))
+            print(f"response code: {r.status_code}")
+            print(f"response: {r.text}")
+        except:
+            print("Could not reach server.")
