@@ -22,7 +22,7 @@ def get_ble_mac():
     return mac.lower()
 
 def get_time():
-    return str(datetime.datetime.utcnow())
+    return datetime.datetime.utcnow().isoformat()
 
 if __name__ == "__main__":
     import sys
