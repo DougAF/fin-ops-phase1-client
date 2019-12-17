@@ -14,7 +14,7 @@ def get_mac():
 
 
 def get_time():
-    return str(datetime.datetime.utcnow())
+    return datetime.datetime.utcnow().isoformat()
 
 
 def make_mock_mac():
