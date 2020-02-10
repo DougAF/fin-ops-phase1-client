@@ -39,7 +39,7 @@ if __name__ == "__main__":
     scanner = Scanner()
 
     while True:
-        devices = scanner.scan(1)
+        devices = scanner.scan(0.005)
         for device in devices:
             data = {
                 "recorder_time": get_time(),
